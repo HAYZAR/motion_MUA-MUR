@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cuentos en Movimiento — Física 10°</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&display=swap');
+
+    :root {
+      --ink: #0a0a0a;
+      --paper: #faf6e8;
+      --panel-bg: #fff;
+      --yellow: #ffe44d;
+      --red: #e83030;
+      --blue: #1a5fbf;
+      --cyan: #18b8d8;
+      --orange: #f07020;
+      --green: #28a858;
+      --purple: #8030c8;
+      --border: 3px solid var(--ink);
+      --shadow: 5px 5px 0 var(--ink);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Comic Neue', cursive;
+      background: var(--paper);
+      background-image:
+        radial-gradient(circle, rgba(0,0,0,.04) 1px, transparent 1px);
+      background-size: 18px 18px;
+      color: var(--ink);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      background: var(--ink);
+      color: #fff;
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 6px solid var(--yellow);
+    }
+
+    /* Halftone pattern */
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 12px 12px;
+      pointer-events: none;
+    }
+
+    /* Speed lines emanating from center */
+    .cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(255,228,77,.04) 0deg,
+        transparent 2deg,
+        transparent 10deg
+      );
+      pointer-events: none;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Bangers', cursive;
+      font-size: .9rem;
+      letter-spacing: 3px;
+      padding: .3rem 1.2rem;
+      border-radius: 3px;
+      margin-bottom: 1.2rem;
+      border: 2px solid #fff;
+      transform: rotate(-1deg);
+      position: relative;
+    }
+
+    .cover h1 {
+      font-family: 'Bangers', cursive;
+      font-size: 5rem;
+      letter-spacing: 4px;
+      line-height: .95;
+      position: relative;
+      margin-bottom: .5rem;
+    }
+    .cover h1 .line1 { color: var(--yellow); display: block; -webkit-text-stroke: 2px var(--ink); }
+    .cover h1 .line2 { color: #fff; display: block; font-size: 3.5rem; }
+    .cover h1 .line3 { color: var(--cyan); display: block; font-size: 2.5rem; letter-spacing: 6px; }
+
+    .cover-sub {
+      font-family: 'Bangers', cursive;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,.7);
+      margin-top: 1rem;
+    }
+
+    .cover-tags {
+      display: flex;
+      justify-content: center;
+      gap: .6rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    .ctag {
+      font-family: 'Bangers', cursive;
+      font-size: .85rem;
+      letter-spacing: 2px;
+      padding: .25rem .8rem;
+      border: 2px solid;
+      border-radius: 3px;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page { max-width: 880px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+
+    /* ── CHAPTER SPLASH ── */
+    .chapter-splash {
+      background: var(--ink);
+      color: #fff;
+      border: var(--border);
+      border-radius: 4px;
+      padding: 1.8rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .chapter-splash::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 10px 10px;
+      pointer-events: none;
+    }
+    .ch-num {
+      font-family: 'Bangers', cursive;
+      font-size: .8rem;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,.5);
+      margin-bottom: .3rem;
+    }
+    .chapter-splash h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 2.5rem;
+      letter-spacing: 3px;
+      line-height: 1.05;
+    }
+    .chapter-splash .concept-tag {
+      display: inline-block;
+      font-family: 'Bangers', cursive;
+      font-size: .85rem;
+      letter-spacing: 2px;
+      padding: .2rem .7rem;
+      border-radius: 2px;
+      margin-top: .5rem;
+      border: 1.5px solid rgba(255,255,255,.3);
+      color: rgba(255,255,255,.8);
+    }
+    .chapter-splash .tagline {
+      font-style: italic;
+      font-size: .95rem;
+      color: rgba(255,255,255,.6);
+      margin-top: .4rem;
+    }
+
+    /* ── COMIC GRID ── */
+    .comic-page {
+      display: grid;
+      gap: 3px;
+      background: var(--ink);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+    .comic-page.layout-2 { grid-template-columns: 1fr 1fr; }
+    .comic-page.layout-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .comic-page.layout-wide { grid-template-columns: 2fr 1fr; }
+    .comic-page.layout-1 { grid-template-columns: 1fr; }
+    .comic-page.layout-2x2 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    /* ── PANEL ── */
+    .panel {
+      background: var(--panel-bg);
+      padding: 1rem;
+      position: relative;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      overflow: hidden;
+    }
+
+    /* Panel color themes */
+    .panel.p-yellow { background: var(--yellow); }
+    .panel.p-red    { background: #ffeaea; }
+    .panel.p-blue   { background: #e8f0ff; }
+    .panel.p-cyan   { background: #e0f8ff; }
+    .panel.p-dark   { background: var(--ink); color: #fff; }
+    .panel.p-action {
+      background: var(--yellow);
+      background-image: repeating-conic-gradient(
+        from 0deg at 50% 120%,
+        rgba(255,140,0,.12) 0deg,
+        transparent 3deg,
+        transparent 8deg
+      );
+    }
+
+    /* Panel number */
+    .panel-num {
+      position: absolute;
+      top: 6px; left: 8px;
+      font-family: 'Bangers', cursive;
+      font-size: .65rem;
+      color: rgba(0,0,0,.3);
+      letter-spacing: 1px;
+    }
+
+    /* ── SPEECH BUBBLES ── */
+    .bubble-wrap { display: flex; flex-direction: column; gap: .5rem; margin-top: auto; }
+
+    .bubble {
+      border: 2.5px solid var(--ink);
+      border-radius: 18px;
+      padding: .55rem .9rem;
+      font-size: .88rem;
+      font-weight: 700;
+      position: relative;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+      max-width: 95%;
+    }
+    .bubble.left { align-self: flex-start; border-bottom-left-radius: 4px; }
+    .bubble.right { align-self: flex-end; border-bottom-right-radius: 4px; }
+    .bubble.thought { border-style: dashed; border-radius: 50px; }
+    .bubble.shout {
+      border-radius: 4px;
+      transform: rotate(-1deg);
+      background: var(--yellow);
+    }
+    .bubble.red   { background: #ffe0e0; border-color: var(--red); }
+    .bubble.blue  { background: #e0eaff; border-color: var(--blue); }
+    .bubble.cyan  { background: #d8f8ff; border-color: var(--cyan); }
+    .bubble.green { background: #d8f8e0; border-color: var(--green); }
+    .bubble.purple { background: #f0e0ff; border-color: var(--purple); }
+
+    .speaker {
+      font-family: 'Bangers', cursive;
+      font-size: .65rem;
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: .15rem;
+      color: var(--blue);
+    }
+    .bubble.red .speaker { color: var(--red); }
+    .bubble.cyan .speaker { color: var(--cyan); }
+    .bubble.green .speaker { color: var(--green); }
+    .bubble.purple .speaker { color: var(--purple); }
+
+    /* ── ACTION TEXT ── */
+    .action-text {
+      font-family: 'Bangers', cursive;
+      font-size: 3.5rem;
+      letter-spacing: 3px;
+      line-height: 1;
+      -webkit-text-stroke: 2px var(--ink);
+      color: var(--yellow);
+      text-align: center;
+      text-shadow: 4px 4px 0 var(--ink);
+      animation: actionPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes actionPulse {
+      0%,100%{ transform: scale(1); }
+      50%{ transform: scale(1.04); }
+    }
+    .action-sub {
+      font-family: 'Bangers', cursive;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      text-align: center;
+      color: var(--ink);
+    }
+
+    /* ── MOTION TRACK ── */
+    .track-panel {
+      background: #1a1a2e;
+      padding: .8rem;
+      border-radius: 4px;
+      margin: .4rem 0;
+    }
+    .track-label {
+      font-family: 'Bangers', cursive;
+      font-size: .7rem;
+      letter-spacing: 2px;
+      margin-bottom: .4rem;
+    }
+    .track {
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 30px;
+    }
+    .track-line {
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,.15);
+      transform: translateY(-50%);
+    }
+    .dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2.5px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bangers', cursive;
+      font-size: .65rem;
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 2;
+    }
+    /* MRU equally spaced */
+    .eq0 { left: 2%; } .eq1 { left: 22%; } .eq2 { left: 42%; } .eq3 { left: 62%; } .eq4 { left: 82%; }
+    .dot-yellow { background: var(--yellow); color: var(--ink); }
+    /* MUA accelerating */
+    .ac0 { left: 2%; } .ac1 { left: 8%; } .ac2 { left: 20%; } .ac3 { left: 42%; } .ac4 { left: 80%; }
+    .dot-red { background: var(--red); color: #fff; }
+
+    /* ── PHYSICS BOX ── */
+    .physics-box {
+      background: var(--ink);
+      color: #fff;
+      border: var(--border);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      box-shadow: var(--shadow);
+    }
+    .physics-box .pbox-header {
+      font-family: 'Bangers', cursive;
+      font-size: .85rem;
+      letter-spacing: 3px;
+      color: var(--yellow);
+      margin-bottom: .5rem;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+      padding-bottom: .3rem;
+    }
+    .physics-box p { font-size: .92rem; color: #ddd; line-height: 1.65; }
+    .physics-box strong { color: #fff; }
+
+    /* ── EQUATION PANEL ── */
+    .eq-panel {
+      background: var(--yellow);
+      border: var(--border);
+      border-radius: 4px;
+      padding: .9rem 1.2rem;
+      margin: .8rem 0;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .eq-formula {
+      font-family: 'Bangers', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--ink);
+    }
+    .eq-note { font-size: .8rem; color: rgba(0,0,0,.6); margin-top: .3rem; }
+    .eq-result { font-size: .9rem; font-weight: 700; color: var(--blue); margin-top: .35rem; }
+
+    .eq-panel.red   { background: #ffe0e0; }
+    .eq-panel.blue  { background: #e0eaff; }
+    .eq-panel.cyan  { background: #d8f8ff; }
+    .eq-panel.green { background: #d8f8e0; }
+
+    /* ── DATA TABLE ── */
+    .data-wrap { overflow-x: auto; margin: .8rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .85rem;
+      border: var(--border);
+    }
+    thead tr { background: var(--ink); color: #fff; }
+    thead th {
+      padding: .5rem .8rem;
+      text-align: center;
+      font-family: 'Bangers', cursive;
+      font-size: .8rem;
+      letter-spacing: 1.5px;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+    tbody tr:nth-child(even) { background: rgba(0,0,0,.04); }
+    tbody td {
+      padding: .45rem .8rem;
+      text-align: center;
+      border: 1.5px solid rgba(0,0,0,.12);
+      font-weight: 700;
+    }
+    .t-y { color: #b87800; }
+    .t-r { color: var(--red); }
+    .t-b { color: var(--blue); }
+    .t-c { color: var(--cyan); }
+
+    /* ── SVG GRAPH ── */
+    .graph-wrap {
+      background: #fff;
+      border: var(--border);
+      border-radius: 4px;
+      padding: .8rem;
+      margin: .8rem 0;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .graph-title {
+      font-family: 'Bangers', cursive;
+      font-size: .8rem;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: .5rem;
+    }
+    svg { width: 100%; height: auto; }
+
+    /* Animated paths */
+    .draw-y { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawIt 1.8s ease forwards .5s; }
+    .draw-r { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawIt 1.8s ease forwards .8s; }
+    @keyframes drawIt { to { stroke-dashoffset: 0; } }
+
+    /* ── QUESTION BOX ── */
+    .q-box {
+      background: var(--cyan);
+      border: var(--border);
+      border-radius: 4px;
+      padding: .9rem 1.2rem;
+      margin: 1rem 0;
+      box-shadow: var(--shadow);
+      font-size: .93rem;
+    }
+    .q-box::before {
+      content: '?! ¡RETO! ?!';
+      display: block;
+      font-family: 'Bangers', cursive;
+      font-size: .8rem;
+      letter-spacing: 3px;
+      color: var(--ink);
+      margin-bottom: .4rem;
+    }
+
+    /* ── CHALLENGES SECTION ── */
+    .challenges-header {
+      background: var(--red);
+      color: #fff;
+      border: var(--border);
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 .3px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .challenges-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 10px 10px;
+    }
+    .challenges-header h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 2.5rem;
+      letter-spacing: 4px;
+      position: relative;
+    }
+    .challenges-header p {
+      font-style: italic;
+      color: rgba(255,255,255,.75);
+      font-size: .9rem;
+      position: relative;
+    }
+
+    .challenge-card {
+      background: var(--panel-bg);
+      border: var(--border);
+      padding: 1.1rem 1.3rem;
+      margin-bottom: .3px;
+      box-shadow: 3px 3px 0 var(--ink);
+      border-top: none;
+    }
+    .challenge-card:first-of-type { border-top: var(--border); margin-top: 3px; }
+    .ch-head { display: flex; gap: .8rem; align-items: baseline; margin-bottom: .45rem; }
+    .ch-n {
+      font-family: 'Bangers', cursive;
+      font-size: 1.6rem;
+      line-height: 1;
+      min-width: 36px;
+    }
+    .ch-tag-label {
+      font-family: 'Bangers', cursive;
+      font-size: .72rem;
+      letter-spacing: 2px;
+      padding: .15rem .5rem;
+      border-radius: 2px;
+      border: 1.5px solid;
+    }
+    .ch-body { font-size: .92rem; line-height: 1.7; color: #222; }
+    .ch-hint {
+      margin-top: .5rem;
+      padding: .45rem .8rem;
+      background: var(--yellow);
+      border-left: 3px solid var(--ink);
+      font-size: .8rem;
+      border-radius: 0 3px 3px 0;
+    }
+    .ch-hint::before { content: '💡 PISTA: '; font-family: 'Bangers', cursive; letter-spacing: 1px; font-size: .75rem; }
+
+    /* ── FINAL PANEL ── */
+    .final-panel {
+      background: var(--ink);
+      color: #fff;
+      border: var(--border);
+      padding: 2rem;
+      margin-top: 2.5rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(255,228,77,.05) 0deg,
+        transparent 4deg,
+        transparent 14deg
+      );
+    }
+    .final-panel h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      letter-spacing: 4px;
+      color: var(--yellow);
+      position: relative;
+    }
+    .final-panel p {
+      font-style: italic;
+      color: rgba(255,255,255,.8);
+      font-size: 1rem;
+      max-width: 540px;
+      margin: .8rem auto 0;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    footer {
+      text-align: center;
+      font-family: 'Bangers', cursive;
+      font-size: .85rem;
+      letter-spacing: 3px;
+      color: rgba(0,0,0,.4);
+      margin-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    @media(max-width:600px){
+      .comic-page.layout-2,.comic-page.layout-3,.comic-page.layout-wide { grid-template-columns:1fr; }
+      .cover h1 { font-size: 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <div class="cover-badge">· FÍSICA 10° · EDICIÓN ESPECIAL ·</div>
+  <h1>
+    <span class="line1">CUENTOS</span>
+    <span class="line2">EN</span>
+    <span class="line3">MOVIMIENTO</span>
+  </h1>
+  <p class="cover-sub">· 4 HISTORIAS · CINEMÁTICA · MRU · MUA · CAÍDA LIBRE ·</p>
+  <div class="cover-tags">
+    <span class="ctag" style="color:var(--yellow);border-color:var(--yellow);">MRU</span>
+    <span class="ctag" style="color:var(--cyan);border-color:var(--cyan);">MUA</span>
+    <span class="ctag" style="color:var(--orange);border-color:var(--orange);">CAÍDA LIBRE</span>
+    <span class="ctag" style="color:#aaa;border-color:#aaa;">ENCUENTRO</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════════════════════════
+     CAPÍTULO 1 — MRU
+═══════════════════════════════ -->
+
+<div class="chapter-splash" style="border-left: 8px solid var(--yellow);">
+  <div class="ch-num">· CAPÍTULO 1 ·</div>
+  <h2 style="color:var(--yellow);">EL MENSAJERO<br>DEL RITMO ETERNO</h2>
+  <span class="concept-tag">MRU · v = constante · x = x₀ + vt</span>
+  <p class="tagline">"No soy el más rápido. Soy el más predecible. Y eso, en física, es un superpoder."</p>
+</div>
+
+<!-- SCENE 1 -->
+<div class="comic-page layout-wide">
+  <div class="panel p-action">
+    <span class="panel-num">1</span>
+    <div class="action-text">¡ZEPHYR!</div>
+    <div class="action-sub">El mensajero del ritmo constante</div>
+    <div class="track-panel" style="margin-top:auto;">
+      <div class="track-label" style="color:var(--yellow);">POSICIÓN — ¿cuánto avanza cada segundo?</div>
+      <div class="track" style="width:100%;">
+        <div class="track-line"></div>
+        <div class="dot dot-yellow eq0">0</div>
+        <div class="dot dot-yellow eq1">1</div>
+        <div class="dot dot-yellow eq2">2</div>
+        <div class="dot dot-yellow eq3">3</div>
+        <div class="dot dot-yellow eq4">4</div>
+      </div>
+      <div style="display:flex;justify-content:space-around;margin-top:.3rem;">
+        <span style="font-size:.65rem;color:rgba(255,255,255,.5);">←2m→</span>
+        <span style="font-size:.65rem;color:rgba(255,255,255,.5);">←2m→</span>
+        <span style="font-size:.65rem;color:rgba(255,255,255,.5);">←2m→</span>
+        <span style="font-size:.65rem;color:rgba(255,255,255,.5);">←2m→</span>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <span class="panel-num">2</span>
+    <div class="bubble-wrap">
+      <div class="bubble left">
+        <span class="speaker">NEXA — OBSERVADORA</span>
+        En 1 segundo recorriste exactamente 2 metros.
+      </div>
+      <div class="bubble left">
+        <span class="speaker">NEXA</span>
+        En el segundo siguiente... ¡otros 2 metros!
+      </div>
+      <div class="bubble thought left" style="margin-top:.3rem;">
+        Distancias iguales... tiempos iguales... ¿la velocidad es constante?
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comic-page layout-3">
+  <div class="panel p-blue">
+    <span class="panel-num">3</span>
+    <div class="bubble blue left">
+      <span class="speaker" style="color:var(--blue);">ZEPHYR</span>
+      No cambié nada. Solo seguí recto.
+    </div>
+    <div class="bubble blue left">
+      <span class="speaker" style="color:var(--blue);">ZEPHYR</span>
+      Trayectoria recta. Rapidez constante. Sin acelerar, sin frenar.
+    </div>
+  </div>
+  <div class="panel p-yellow" style="align-items:center;justify-content:center;">
+    <span class="panel-num">4</span>
+    <div style="text-align:center;">
+      <div style="font-family:'Bangers',cursive;font-size:2.5rem;letter-spacing:2px;line-height:1;">MRU</div>
+      <div style="font-size:.75rem;font-weight:700;margin-top:.3rem;">Movimiento<br>Rectilíneo<br>Uniforme</div>
+    </div>
+  </div>
+  <div class="panel">
+    <span class="panel-num">5</span>
+    <div class="bubble shout left">
+      <span class="speaker">ZEPHYR</span>
+      ¿Eso tiene nombre?
+    </div>
+    <div class="bubble blue left" style="margin-top:.3rem;">
+      <span class="speaker" style="color:var(--blue);">NEXA</span>
+      ¡SÍ! Se llama MRU. ¡Y con UNA ecuación puedo saber dónde estás EN CUALQUIER MOMENTO!
+    </div>
+  </div>
+</div>
+
+<!-- PHYSICS REVELATION -->
+<div class="physics-box">
+  <div class="pbox-header">📋 LO QUE DESCUBRIÓ NEXA</div>
+  <p>En el <strong>MRU</strong>, el móvil recorre una <strong>trayectoria recta</strong> con <strong>velocidad constante</strong>. Avanza <strong>distancias iguales en tiempos iguales</strong>. No hay aceleración — ninguna fuerza neta actúa sobre él.</p>
+</div>
+
+<!-- EQUATIONS -->
+<div class="eq-panel">
+  <div class="eq-formula">v = Δx / Δt = 2 m / 1 s = 2 m/s</div>
+  <div class="eq-note">La velocidad de Zephyr — igual en todos los momentos</div>
+</div>
+<div class="eq-panel">
+  <div class="eq-formula">x = x₀ + v · t</div>
+  <div class="eq-note">Posición en cualquier instante</div>
+  <div class="eq-result">¿Dónde está en t = 5s? → x = 0 + 2 × 5 = 10 metros</div>
+</div>
+
+<!-- DATA TABLE -->
+<div class="data-wrap">
+  <table>
+    <thead><tr><th>t (s)</th><th>x (m)</th><th>Δx (m)</th><th>Observación</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td class="t-y">0</td><td>—</td><td style="font-size:.78rem;">Punto de partida</td></tr>
+      <tr><td>1</td><td class="t-y">2</td><td class="t-b">+2</td><td style="font-size:.78rem;">Siempre igual ✓</td></tr>
+      <tr><td>2</td><td class="t-y">4</td><td class="t-b">+2</td><td style="font-size:.78rem;">Siempre igual ✓</td></tr>
+      <tr><td>3</td><td class="t-y">6</td><td class="t-b">+2</td><td style="font-size:.78rem;">Siempre igual ✓</td></tr>
+      <tr><td>4</td><td class="t-y">8</td><td class="t-b">+2</td><td style="font-size:.78rem;">El patrón es la ley</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- GRAPH -->
+<div class="graph-wrap">
+  <div class="graph-title" style="color:var(--blue);">GRÁFICA X vs T — MRU (recta = velocidad constante)</div>
+  <svg viewBox="0 0 520 230" xmlns="http://www.w3.org/2000/svg">
+    <rect width="520" height="230" fill="#fff"/>
+    <defs>
+      <marker id="a1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L7,3 z" fill="#0a0a0a"/>
+      </marker>
+    </defs>
+    <!-- grid -->
+    <line x1="55" y1="20" x2="55" y2="185" stroke="#ddd" stroke-width="1"/>
+    <line x1="55" y1="185" x2="500" y2="185" stroke="#ddd" stroke-width="1"/>
+    <line x1="55" y1="145" x2="500" y2="145" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="55" y1="105" x2="500" y2="105" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="55" y1="65"  x2="500" y2="65"  stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="145" y1="20" x2="145" y2="185" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="235" y1="20" x2="235" y2="185" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="325" y1="20" x2="325" y2="185" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="415" y1="20" x2="415" y2="185" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <!-- axes -->
+    <line x1="55" y1="185" x2="505" y2="185" stroke="#0a0a0a" stroke-width="2.5" marker-end="url(#a1)"/>
+    <line x1="55" y1="185" x2="55"  y2="16"  stroke="#0a0a0a" stroke-width="2.5" marker-end="url(#a1)"/>
+    <!-- labels -->
+    <text x="507" y="189" font-size="12" fill="#0a0a0a" font-family="serif" font-style="italic">t</text>
+    <text x="45"  y="13"  font-size="12" fill="#0a0a0a" font-family="serif" font-style="italic">x</text>
+    <text x="145" y="200" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">1s</text>
+    <text x="235" y="200" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">2s</text>
+    <text x="325" y="200" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">3s</text>
+    <text x="415" y="200" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">4s</text>
+    <text x="48" y="188" text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">0</text>
+    <text x="48" y="148" text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">2m</text>
+    <text x="48" y="108" text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">4m</text>
+    <text x="48" y="68"  text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">6m</text>
+    <!-- LINE MRU: (55,185)→(145,145)→(235,105)→(325,65)→(415,25) -->
+    <line x1="55" y1="185" x2="415" y2="25" stroke="#1a5fbf" stroke-width="3" class="draw-y"/>
+    <circle cx="55"  cy="185" r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <circle cx="145" cy="145" r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <circle cx="235" cy="105" r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <circle cx="325" cy="65"  r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <!-- Slope label -->
+    <rect x="330" y="55" width="130" height="28" rx="3" fill="#ffe44d" stroke="#0a0a0a" stroke-width="1.5"/>
+    <text x="395" y="68" text-anchor="middle" font-size="10" fill="#0a0a0a" font-family="sans-serif" font-weight="700">pendiente = v = 2 m/s</text>
+    <text x="395" y="78" text-anchor="middle" font-size="9"  fill="#555" font-family="sans-serif">¡RECTA! = v constante</text>
+  </svg>
+</div>
+
+<div class="q-box">
+  Si Zephyr sale a las 6:00 AM con v = 2 m/s, ¿dónde está a las 6:10 AM? ¿En qué momento llega al kilómetro 1? ¿Qué forma tendría la gráfica v-t? ¿Qué nos dice sobre la aceleración?
+</div>
+
+<!-- ═══════════════════════════════
+     CAPÍTULO 2 — MUA
+═══════════════════════════════ -->
+
+<div class="chapter-splash" style="border-left: 8px solid var(--red);">
+  <div class="ch-num">· CAPÍTULO 2 ·</div>
+  <h2 style="color:var(--red);">¡VELOCIS<br>APRENDE A VOLAR!</h2>
+  <span class="concept-tag">MUA · a = constante · x = ½at²</span>
+  <p class="tagline">"Cada segundo soy una versión más rápida de mí misma."</p>
+</div>
+
+<div class="comic-page layout-2">
+  <div class="panel" style="background:#1a0a0a;">
+    <span class="panel-num">1</span>
+    <div class="action-text" style="color:var(--red);-webkit-text-stroke:2px #fff;">¡BOOM!</div>
+    <div class="action-sub" style="color:#fff;">¡Velocis despega!</div>
+    <div class="track-panel" style="margin-top:.5rem;">
+      <div class="track-label" style="color:var(--red);">POSICIONES — ¿distancias iguales o distintas?</div>
+      <div class="track">
+        <div class="track-line"></div>
+        <div class="dot dot-red ac0">0</div>
+        <div class="dot dot-red ac1">1</div>
+        <div class="dot dot-red ac2">2</div>
+        <div class="dot dot-red ac3">3</div>
+        <div class="dot dot-red ac4">4</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:0 2%;margin-top:.3rem;">
+        <span style="font-size:.6rem;color:var(--red);">1m</span>
+        <span style="font-size:.6rem;color:var(--red);">→3m→</span>
+        <span style="font-size:.6rem;color:var(--red);">→→5m→→</span>
+        <span style="font-size:.6rem;color:var(--red);">→→→7m→→→</span>
+      </div>
+    </div>
+  </div>
+  <div class="panel p-red">
+    <span class="panel-num">2</span>
+    <div class="bubble red left">
+      <span class="speaker">VELOCIS — 1er SEGUNDO</span>
+      Solo avancé 1 metro... qué lento.
+    </div>
+    <div class="bubble red left">
+      <span class="speaker">VELOCIS — 2do SEGUNDO</span>
+      ¡3 metros! ¡Más que antes!
+    </div>
+    <div class="bubble shout left" style="background:var(--red);color:#fff;border-color:#900;">
+      <span class="speaker" style="color:rgba(255,255,255,.7);">VELOCIS — 3er SEGUNDO</span>
+      ¡¡5 METROS!! ¡ALGO ESTÁ CAMBIANDO!
+    </div>
+  </div>
+</div>
+
+<div class="comic-page layout-3">
+  <div class="panel">
+    <span class="panel-num">3</span>
+    <div class="bubble left">
+      <span class="speaker">LUNA — ANALISTA</span>
+      Las diferencias: 1, 3, 5, 7...
+    </div>
+    <div class="bubble left">
+      Crecen de 2 en 2. ¡Es un patrón!
+    </div>
+    <div class="bubble thought left">
+      La velocidad cambia... ¡hay aceleración!
+    </div>
+  </div>
+  <div class="panel p-yellow" style="align-items:center;justify-content:center;">
+    <span class="panel-num">4</span>
+    <div style="text-align:center;">
+      <div style="font-family:'Bangers',cursive;font-size:2.5rem;letter-spacing:2px;line-height:1;">MUA</div>
+      <div style="font-size:.72rem;font-weight:700;margin-top:.3rem;">Movimiento<br>Uniformemente<br>Acelerado</div>
+    </div>
+  </div>
+  <div class="panel p-red">
+    <span class="panel-num">5</span>
+    <div class="bubble red left">
+      <span class="speaker">LUNA</span>
+      Si Δx crece de 2 en 2 cada segundo, entonces a = 2 m/s²
+    </div>
+    <div class="bubble red left">
+      La aceleración es constante. La curva del espacio-tiempo es una parábola.
+    </div>
+  </div>
+</div>
+
+<div class="physics-box">
+  <div class="pbox-header">📋 LO QUE DESCUBRIÓ LUNA</div>
+  <p>En el <strong>MUA</strong>, la velocidad cambia a ritmo constante. Las distancias recorridas en tiempos iguales <strong>crecen siempre en la misma cantidad</strong>. La aceleración a = Δv/Δt es constante. La gráfica x-t es una <strong>parábola</strong>.</p>
+</div>
+
+<div class="eq-panel red">
+  <div class="eq-formula">a = Δv / Δt = 2 m/s²</div>
+  <div class="eq-note">La velocidad crece 2 m/s en cada segundo</div>
+</div>
+<div class="eq-panel red">
+  <div class="eq-formula">x = x₀ + v₀·t + ½·a·t²</div>
+  <div class="eq-note">v₀ = 0 (parte del reposo) · a = 2 m/s²</div>
+  <div class="eq-result">En t=4s: x = 0 + 0 + ½×2×16 = 16 metros</div>
+</div>
+<div class="eq-panel red">
+  <div class="eq-formula">v = v₀ + a · t</div>
+  <div class="eq-note">Velocidad en cada instante</div>
+  <div class="eq-result">En t=4s: v = 0 + 2×4 = 8 m/s</div>
+</div>
+
+<div class="data-wrap">
+  <table>
+    <thead><tr><th>t (s)</th><th>x (m)</th><th>Δx (m)</th><th>v (m/s)</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td class="t-r">0</td><td>—</td><td class="t-b">0</td></tr>
+      <tr><td>1</td><td class="t-r">1</td><td class="t-c">+1</td><td class="t-b">2</td></tr>
+      <tr><td>2</td><td class="t-r">4</td><td class="t-c">+3</td><td class="t-b">4</td></tr>
+      <tr><td>3</td><td class="t-r">9</td><td class="t-c">+5</td><td class="t-b">6</td></tr>
+      <tr><td>4</td><td class="t-r">16</td><td class="t-c">+7</td><td class="t-b">8</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="graph-wrap">
+  <div class="graph-title" style="color:var(--red);">GRÁFICA X vs T — MUA (parábola = aceleración)</div>
+  <svg viewBox="0 0 520 230" xmlns="http://www.w3.org/2000/svg">
+    <rect width="520" height="230" fill="#fff"/>
+    <defs>
+      <marker id="a2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L7,3 z" fill="#0a0a0a"/>
+      </marker>
+    </defs>
+    <line x1="55" y1="185" x2="505" y2="185" stroke="#0a0a0a" stroke-width="2.5" marker-end="url(#a2)"/>
+    <line x1="55" y1="185" x2="55"  y2="16"  stroke="#0a0a0a" stroke-width="2.5" marker-end="url(#a2)"/>
+    <line x1="55" y1="145" x2="500" y2="145" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="55" y1="105" x2="500" y2="105" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="55" y1="65"  x2="500" y2="65"  stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="145" y1="20" x2="145" y2="185" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="235" y1="20" x2="235" y2="185" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="325" y1="20" x2="325" y2="185" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="415" y1="20" x2="415" y2="185" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="507" y="189" font-size="12" fill="#0a0a0a" font-family="serif" font-style="italic">t</text>
+    <text x="45"  y="13"  font-size="12" fill="#0a0a0a" font-family="serif" font-style="italic">x</text>
+    <text x="145" y="200" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">1s</text>
+    <text x="235" y="200" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">2s</text>
+    <text x="325" y="200" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">3s</text>
+    <text x="415" y="200" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">4s</text>
+    <text x="48" y="188" text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">0</text>
+    <text x="48" y="148" text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">4m</text>
+    <text x="48" y="108" text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">8m</text>
+    <text x="48" y="68"  text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">12m</text>
+    <!-- PARABOLA: t=0:y=185, t=1:y=175(1m), t=2:y=145(4m), t=3:y=95(9m), t=4:y=25(16m) -->
+    <!-- scale: 16m→160px → 1m=10px; y=185-x*10 -->
+    <polyline points="55,185 145,175 235,145 325,95 415,25"
+      fill="none" stroke="#e83030" stroke-width="3"
+      stroke-linejoin="round" stroke-linecap="round" class="draw-r"/>
+    <circle cx="55"  cy="185" r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <circle cx="145" cy="175" r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <circle cx="235" cy="145" r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <circle cx="325" cy="95"  r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <circle cx="415" cy="25"  r="5" fill="#ffe44d" stroke="#0a0a0a" stroke-width="2"/>
+    <rect x="280" y="30" width="160" height="28" rx="3" fill="#ffe44d" stroke="#0a0a0a" stroke-width="1.5"/>
+    <text x="360" y="43" text-anchor="middle" font-size="10" fill="#0a0a0a" font-family="sans-serif" font-weight="700">¡PARÁBOLA! = aceleración</text>
+    <text x="360" y="53" text-anchor="middle" font-size="9"  fill="#555" font-family="sans-serif">la curva se inclina más = v crece</text>
+  </svg>
+</div>
+
+<div class="q-box" style="background:var(--orange);">
+  Si Velocis parte del reposo con a = 3 m/s², ¿qué velocidad lleva a los 4 segundos? ¿Cuántos metros recorrió? ¿Por qué la gráfica es una parábola y no una recta?
+</div>
+
+<!-- ═══════════════════════════════
+     CAPÍTULO 3 — CAÍDA LIBRE
+═══════════════════════════════ -->
+
+<div class="chapter-splash" style="border-left: 8px solid var(--cyan);">
+  <div class="ch-num">· CAPÍTULO 3 ·</div>
+  <h2 style="color:var(--cyan);">LA LÁGRIMA<br>Y LA GRAVEDAD</h2>
+  <span class="concept-tag">Caída libre · g = 10 m/s² · h = ½gt²</span>
+  <p class="tagline">"No elegí caer. Pero la gravedad sí me eligió a mí."</p>
+</div>
+
+<div class="comic-page layout-2">
+  <div class="panel p-cyan">
+    <span class="panel-num">1</span>
+    <div class="bubble cyan left">
+      <span class="speaker">GRAVITA — HECHICERA</span>
+      Una lágrima cayó de la torre. ¡Sin viento, sin magia!
+    </div>
+    <div class="bubble cyan left">
+      Solo la fuerza más antigua del universo: la gravedad.
+    </div>
+    <!-- Falling drop visualization -->
+    <div style="display:flex;flex-direction:column;gap:.2rem;padding:.5rem;background:#1a2a3a;border-radius:4px;margin-top:auto;">
+      <div style="display:flex;align-items:center;gap:.5rem;">
+        <div style="width:10px;height:14px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--cyan);flex-shrink:0;"></div>
+        <span style="font-size:.7rem;color:#aaa;">t=0 · v=0 · h=0m</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:.5rem;padding-left:20px;">
+        <div style="width:12px;height:16px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--cyan);flex-shrink:0;opacity:.85;"></div>
+        <span style="font-size:.7rem;color:#aaa;">t=1s · v=10 m/s · h=5m</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:.5rem;padding-left:50px;">
+        <div style="width:15px;height:20px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--cyan);flex-shrink:0;opacity:.75;"></div>
+        <span style="font-size:.7rem;color:#aaa;">t=2s · v=20 m/s · h=20m</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:.5rem;padding-left:90px;">
+        <div style="width:18px;height:24px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--cyan);flex-shrink:0;opacity:.65;"></div>
+        <span style="font-size:.7rem;color:#aaa;">t=3s · v=30 m/s · h=45m</span>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <span class="panel-num">2</span>
+    <div class="bubble shout left" style="background:var(--cyan);color:var(--ink);">
+      ¡LAS DISTANCIAS TAMBIÉN CRECEN!
+    </div>
+    <div class="bubble left" style="margin-top:.4rem;">
+      <span class="speaker">LA LÁGRIMA</span>
+      Primer segundo: caí 5m.<br>
+      Segundo segundo: caí 15m más.<br>
+      Tercer segundo: caí 25m más...
+    </div>
+    <div class="bubble thought left">
+      ¡Son 5, 15, 25... crecen de 10 en 10! Es MUA con a = g!
+    </div>
+  </div>
+</div>
+
+<div class="physics-box">
+  <div class="pbox-header">📋 EL SECRETO DE LA CAÍDA LIBRE</div>
+  <p>La <strong>caída libre</strong> es MUA con a = g ≈ 9.8 m/s² (usamos 10 m/s²). Un objeto parte del reposo (v₀ = 0) y acelera uniformemente hacia abajo. <strong>Galileo demostró</strong> que todos los objetos caen igual sin importar su masa — una de las ideas más revolucionarias de la física.</p>
+</div>
+
+<div class="eq-panel cyan">
+  <div class="eq-formula">h = ½ · g · t²</div>
+  <div class="eq-note">Altura caída · g = 10 m/s² · v₀ = 0</div>
+  <div class="eq-result">En t = 3s: h = ½ × 10 × 9 = 45 metros</div>
+</div>
+<div class="eq-panel cyan">
+  <div class="eq-formula">v = g · t</div>
+  <div class="eq-note">Velocidad durante la caída libre</div>
+  <div class="eq-result">En t = 3s: v = 10 × 3 = 30 m/s</div>
+</div>
+<div class="eq-panel cyan">
+  <div class="eq-formula">v² = 2 · g · h</div>
+  <div class="eq-note">Velocidad según la altura — sin necesitar el tiempo</div>
+  <div class="eq-result">Si cae 20m: v = √(2×10×20) = √400 = 20 m/s</div>
+</div>
+
+<div class="q-box" style="background:var(--cyan);">
+  Una piedra cae desde un puente y tarda 3 segundos en llegar al agua. ¿A qué altura está el puente? ¿Con qué velocidad llega? Si una pluma cayera en el vacío, ¿tardaría lo mismo? ¿Por qué?
+</div>
+
+<!-- ═══════════════════════════════
+     CAPÍTULO 4 — ENCUENTRO
+═══════════════════════════════ -->
+
+<div class="chapter-splash" style="border-left: 8px solid var(--green);">
+  <div class="ch-num">· CAPÍTULO 4 ·</div>
+  <h2 style="color:var(--green);">¡EL GRAN DUELO!<br>TORTUGA vs RAYO</h2>
+  <span class="concept-tag">MRU vs MUA · Punto de encuentro · Ecuación cuadrática</span>
+  <p class="tagline">"La ventaja inicial no siempre gana. El tiempo juega a favor de la aceleración."</p>
+</div>
+
+<div class="comic-page layout-2x2">
+  <div class="panel p-yellow">
+    <span class="panel-num">1</span>
+    <div class="bubble shout left" style="transform:rotate(1deg);">¡YO PARTO PRIMERO!</div>
+    <div class="bubble yellow left" style="border-color:#b87800;">
+      <span class="speaker" style="color:#b87800;">TORTUGA ZEPHYR</span>
+      Voy a 6 m/s. Constante. Nunca cambio. ¡MRU puro!
+    </div>
+  </div>
+  <div class="panel" style="background:#0a1a0a;">
+    <span class="panel-num">2</span>
+    <div class="bubble shout right" style="background:var(--green);color:#fff;border-color:#005000;transform:rotate(-1deg);">¡YO ACELERO!</div>
+    <div class="bubble green right">
+      <span class="speaker">RAYO VELOCIS</span>
+      Parto del reposo. Pero a = 2 m/s². ¡El tiempo me da poder!
+    </div>
+  </div>
+  <div class="panel">
+    <span class="panel-num">3</span>
+    <div class="bubble left">
+      <span class="speaker">NEXA — ÁRBITRO</span>
+      ¿En qué momento el Rayo alcanza a la Tortuga?
+    </div>
+    <div class="bubble thought left">
+      Cuando x_Tortuga = x_Rayo... ¡hay que igualar las ecuaciones!
+    </div>
+  </div>
+  <div class="panel p-yellow">
+    <span class="panel-num">4</span>
+    <div style="font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:2px;text-align:center;margin-bottom:.3rem;">LA SOLUCIÓN</div>
+    <div style="font-size:.82rem;background:#fff;border:2px solid var(--ink);border-radius:4px;padding:.5rem;line-height:1.7;">
+      <strong>6t = t²</strong><br>
+      t² − 6t = 0<br>
+      t(t − 6) = 0<br>
+      <strong style="color:var(--blue);">t = 0 o t = 6s ✓</strong>
+    </div>
+  </div>
+</div>
+
+<div class="physics-box">
+  <div class="pbox-header">📋 EL MÉTODO DEL ENCUENTRO</div>
+  <p>Para encontrar <strong>cuándo dos móviles están en el mismo lugar</strong>, igualamos sus ecuaciones de posición: x_A = x_B. Esto genera una <strong>ecuación cuadrática</strong> con dos soluciones: t=0 (la partida) y el momento real del alcance.</p>
+</div>
+
+<!-- DUAL GRAPH -->
+<div class="graph-wrap">
+  <div class="graph-title">GRÁFICA COMPARATIVA — Tortuga (amarillo) vs Rayo (verde)</div>
+  <svg viewBox="0 0 520 250" xmlns="http://www.w3.org/2000/svg">
+    <rect width="520" height="250" fill="#fff"/>
+    <defs>
+      <marker id="a3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L7,3 z" fill="#0a0a0a"/>
+      </marker>
+    </defs>
+    <!-- Grid -->
+    <line x1="55" y1="205" x2="505" y2="205" stroke="#0a0a0a" stroke-width="2.5" marker-end="url(#a3)"/>
+    <line x1="55" y1="205" x2="55"  y2="16"  stroke="#0a0a0a" stroke-width="2.5" marker-end="url(#a3)"/>
+    <text x="507" y="209" font-size="11" fill="#0a0a0a" font-family="serif" font-style="italic">t</text>
+    <text x="44"  y="13"  font-size="11" fill="#0a0a0a" font-family="serif" font-style="italic">x</text>
+    <!-- Grid lines -->
+    <line x1="55" y1="165" x2="500" y2="165" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <line x1="55" y1="125" x2="500" y2="125" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+    <!-- Time ticks: 0,1,2,3,4,5,6,7,8 → x:55,107,159,211,263,315,367,419,471 (Δ=52px) -->
+    <!-- Position scale: 0-48m, 189px range → 1m=3.9375px, y=205-x*3.9375 -->
+    <!-- Tortuga: x=6t → 0,6,12,18,24,30,36,42,48 -->
+    <!-- Rayo: x=t² → 0,1,4,9,16,25,36,49 (cap at 48) -->
+    <text x="107" y="220" text-anchor="middle" font-size="9" fill="#666" font-family="sans-serif">1</text>
+    <text x="211" y="220" text-anchor="middle" font-size="9" fill="#666" font-family="sans-serif">2</text>
+    <text x="315" y="220" text-anchor="middle" font-size="9" fill="#666" font-family="sans-serif">3</text>
+    <text x="367" y="220" text-anchor="middle" font-size="9" fill="#666" font-family="sans-serif">4</text>
+    <text x="419" y="220" text-anchor="middle" font-size="9" fill="#666" font-family="sans-serif">5</text>
+    <text x="471" y="220" text-anchor="middle" font-size="9" fill="#666" font-family="sans-serif">6s</text>
+    <text x="48" y="168" text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">16m</text>
+    <text x="48" y="128" text-anchor="end" font-size="9" fill="#666" font-family="sans-serif">24m</text>
+    <!-- Tortuga line: x=6t → (55,205),(107,181.4),(159,157.7),(211,134),(263,110.3),(315,86.6),(367,63),(419,39.3),(471,15.6) -->
+    <polyline points="55,205 107,181 159,157 211,134 263,110 315,87 367,63 419,39"
+      fill="none" stroke="#f0c030" stroke-width="3" class="draw-y"/>
+    <!-- Rayo curve: x=t² → (55,205),(107,201),(159,190),(211,170),(263,142),(315,107),(367,63),(419,12) -->
+    <polyline points="55,205 107,201 159,190 211,170 263,142 315,107 367,63 419,12"
+      fill="none" stroke="#28a858" stroke-width="3"
+      stroke-linejoin="round" stroke-linecap="round" class="draw-r"/>
+    <!-- Intersection at t=6, x=36 → (367, 205-36*3.9375) = (367, 63) -->
+    <circle cx="367" cy="63" r="10" fill="none" stroke="#e83030" stroke-width="3"/>
+    <circle cx="367" cy="63" r="5" fill="#e83030"/>
+    <line x1="367" y1="63" x2="367" y2="205" stroke="rgba(232,48,48,.3)" stroke-width="1.5" stroke-dasharray="5,4"/>
+    <text x="372" y="55" font-size="10" fill="#e83030" font-family="sans-serif" font-weight="700">t=6s · x=36m</text>
+    <text x="372" y="67" font-size="9" fill="#e83030" font-family="sans-serif" font-style="italic">¡el alcance!</text>
+    <!-- Legend -->
+    <line x1="65" y1="35" x2="100" y2="35" stroke="#f0c030" stroke-width="2.5"/>
+    <circle cx="82" cy="35" r="4" fill="#ffe44d" stroke="#0a0a0a" stroke-width="1.5"/>
+    <text x="104" y="39" font-size="9" fill="#0a0a0a" font-family="sans-serif">Tortuga (MRU v=6m/s)</text>
+    <line x1="65" y1="50" x2="100" y2="50" stroke="#28a858" stroke-width="2.5"/>
+    <circle cx="82" cy="50" r="4" fill="#28a858" stroke="#0a0a0a" stroke-width="1.5"/>
+    <text x="104" y="54" font-size="9" fill="#0a0a0a" font-family="sans-serif">Rayo (MUA a=2m/s²)</text>
+  </svg>
+</div>
+
+<div class="data-wrap">
+  <table>
+    <thead><tr><th>t (s)</th><th>x Tortuga</th><th>x Rayo</th><th>¿Quién adelante?</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td class="t-y">0</td><td class="t-b">0</td><td style="font-size:.8rem;">Empate</td></tr>
+      <tr><td>2</td><td class="t-y">12m</td><td class="t-b">4m</td><td style="color:#b87800;font-size:.8rem;">Tortuga +8m</td></tr>
+      <tr><td>4</td><td class="t-y">24m</td><td class="t-b">16m</td><td style="color:#b87800;font-size:.8rem;">Tortuga +8m</td></tr>
+      <tr style="background:#fffbe0;"><td style="font-weight:700;">6</td><td class="t-y">36m</td><td class="t-b">36m</td><td style="color:var(--red);font-weight:700;font-size:.8rem;">⚡ ALCANCE!</td></tr>
+      <tr><td>7</td><td class="t-y">42m</td><td class="t-b">49m</td><td style="color:var(--green);font-size:.8rem;">Rayo +7m</td></tr>
+      <tr><td>8</td><td class="t-y">48m</td><td class="t-b">64m</td><td style="color:var(--green);font-size:.8rem;">Rayo +16m</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="q-box" style="background:var(--green);">
+  Si la Tortuga va a 10 m/s y el Rayo tiene a = 2 m/s², ¿en qué momento el Rayo alcanza a la Tortuga? ¿Qué distancia habrán recorrido? ¿Cuándo el Rayo lleva el doble de velocidad que la Tortuga?
+</div>
+
+<!-- ═══════════════════════════════
+     DESAFÍOS
+═══════════════════════════════ -->
+
+<div class="challenges-header">
+  <h2>⚡ DESAFÍOS DEL GRIMOIRO ⚡</h2>
+  <p>Ocho misiones. No se pueden superar memorizando — hay que pensar.</p>
+</div>
+
+<div class="challenge-card">
+  <div class="ch-head">
+    <div class="ch-n" style="color:#b87800;">I</div>
+    <span class="ch-tag-label" style="color:#b87800;border-color:#b87800;">MRU · GRÁFICAS</span>
+  </div>
+  <div class="ch-body">Zephyr va con v = constante. Su gráfica x-t pasa por (0, 3m) y (2s, 7m). (a) ¿Cuál es su velocidad? (b) ¿Dónde está en t = 5s? (c) ¿Qué significaría una recta con pendiente negativa?
+  <div class="ch-hint">La pendiente de x-t es v = Δx/Δt. Pendiente negativa = x disminuye. ¿En qué dirección va?</div>
+  </div>
+</div>
+
+<div class="challenge-card">
+  <div class="ch-head">
+    <div class="ch-n" style="color:var(--red);">II</div>
+    <span class="ch-tag-label" style="color:var(--red);border-color:var(--red);">MUA · TABLA</span>
+  </div>
+  <div class="ch-body">Velocis parte del reposo con a = 3 m/s². Completa la tabla para t = 0 a 5s calculando x y v. ¿En qué instante lleva exactamente 15 m/s? ¿Qué distancia recorrió entonces?
+  <div class="ch-hint">v = at y x = ½at². Cuando v = 15 m/s, despeja t, luego calcula x.</div>
+  </div>
+</div>
+
+<div class="challenge-card">
+  <div class="ch-head">
+    <div class="ch-n" style="color:var(--cyan);">III</div>
+    <span class="ch-tag-label" style="color:var(--cyan);border-color:var(--cyan);">CAÍDA LIBRE</span>
+  </div>
+  <div class="ch-body">La Lágrima cae desde 125 m. (a) ¿Cuánto tarda en llegar al suelo? (b) ¿Con qué velocidad llega? (c) ¿Cuál es su velocidad a los 62.5 m? (d) ¿Es la mitad de la velocidad final? Razona antes de calcular.
+  <div class="ch-hint">Para (a): h = ½gt². Para (c): v² = 2gh con h = 62.5m. ¿La v crece lineal con h?</div>
+  </div>
+</div>
+
+<div class="challenge-card">
+  <div class="ch-head">
+    <div class="ch-n" style="color:var(--blue);">IV</div>
+    <span class="ch-tag-label" style="color:var(--blue);border-color:var(--blue);">CONCEPTUAL</span>
+  </div>
+  <div class="ch-body">Un estudiante dice: "Si Velocis frena, ya no tiene aceleración porque va más lento." ¿Tiene razón? Explica la diferencia entre velocidad y aceleración. Da un ejemplo de un objeto con v = 0 pero a ≠ 0.
+  <div class="ch-hint">Aceleración = cambio de velocidad. Frenar es cambiar la velocidad. Una pelota lanzada hacia arriba en el punto más alto tiene v = 0... ¿pero a = 0?</div>
+  </div>
+</div>
+
+<div class="challenge-card">
+  <div class="ch-head">
+    <div class="ch-n" style="color:var(--green);">V</div>
+    <span class="ch-tag-label" style="color:var(--green);border-color:var(--green);">ENCUENTRO</span>
+  </div>
+  <div class="ch-body">Tortuga va a 8 m/s. Rayo parte del reposo con a = 2 m/s². (a) ¿Cuándo el Rayo alcanza a la Tortuga? (b) ¿Qué distancia recorrieron? (c) ¿Cómo cambia si la Tortuga fuera a 12 m/s?
+  <div class="ch-hint">Iguala las posiciones: 8t = t². Factoriza. La segunda solución (t > 0) es el alcance.</div>
+  </div>
+</div>
+
+<div class="challenge-card">
+  <div class="ch-head">
+    <div class="ch-n" style="color:var(--purple);">VI</div>
+    <span class="ch-tag-label" style="color:var(--purple);border-color:var(--purple);">GRÁFICAS V-T</span>
+  </div>
+  <div class="ch-body">Una gráfica v-t muestra: de t=0 a t=4s la velocidad sube de 0 a 8 m/s linealmente. De t=4s a t=8s la velocidad es constante a 8 m/s. (a) ¿Qué movimiento hay en cada tramo? (b) Calcula el desplazamiento total con las áreas. (c) Dibuja la gráfica x-t.
+  <div class="ch-hint">Área bajo v-t = desplazamiento. Tramo 1: triángulo. Tramo 2: rectángulo. La gráfica x-t tendrá parábola + recta.</div>
+  </div>
+</div>
+
+<div class="challenge-card">
+  <div class="ch-head">
+    <div class="ch-n" style="color:var(--red);">VII</div>
+    <span class="ch-tag-label" style="color:var(--red);border-color:var(--red);">LANZAMIENTO VERTICAL</span>
+  </div>
+  <div class="ch-body">El Rayo lanza una bola hacia arriba con v₀ = 20 m/s. (a) ¿Cuánto tiempo tarda en llegar al punto más alto? (b) ¿A qué altura llega? (c) ¿Cuánto tarda en volver al punto de lanzamiento? (d) ¿Cuál es la velocidad al volver?
+  <div class="ch-hint">En el punto más alto v = 0. Usa v = v₀ − gt. La subida y la bajada son simétricas. La velocidad de regreso = v₀ pero hacia abajo.</div>
+  </div>
+</div>
+
+<div class="challenge-card">
+  <div class="ch-head">
+    <div class="ch-n" style="color:var(--cyan);">VIII</div>
+    <span class="ch-tag-label" style="color:var(--cyan);border-color:var(--cyan);">SÍNTESIS</span>
+  </div>
+  <div class="ch-body">Un mago lanza una piedra horizontalmente desde 80 m de altura con v_horizontal = 15 m/s. (a) ¿Cuánto tarda en caer? (b) ¿A qué distancia horizontal cae? (c) ¿Cuál es la velocidad vertical al llegar? (d) ¿El movimiento horizontal es MRU o MUA?
+  <div class="ch-hint">Separa los ejes: vertical (caída libre, v₀=0) y horizontal (MRU, sin aceleración). Cada eje tiene su propia ecuación.</div>
+  </div>
+</div>
+
+<!-- FINAL -->
+<div class="final-panel">
+  <h3>⚡ FIN DEL NÚMERO 1 ⚡</h3>
+  <p>Cuatro historias. Cuatro leyes del movimiento. Un universo que nunca deja de moverse. La próxima vez que veas algo en movimiento, pregúntate: ¿es MRU o MUA? ¿La velocidad cambia? ¿Hay aceleración? La física es el lenguaje secreto del universo. Y tú ya conoces las primeras palabras.</p>
+  <div style="margin-top:1.5rem;font-family:'Bangers',cursive;font-size:1rem;letter-spacing:3px;color:var(--yellow);position:relative;">· CONTINUARÁ · FÍSICA 10° ·</div>
+</div>
+
+</div>
+<footer>CUENTOS EN MOVIMIENTO · FÍSICA 10° · CINEMÁTICA · 2026</footer>
+
+</body>
+</html>
