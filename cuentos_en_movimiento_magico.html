@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colección: Cuentos en Movimiento</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
+
+    :root {
+      --bg: #090b14;
+      --panel: #121625;
+      --panel-2: #171c2f;
+      --text: #eef2ff;
+      --muted: #b8c0dd;
+      --yellow: #ffe45e;
+      --orange: #ff8a3d;
+      --cyan: #67e8f9;
+      --violet: #b388ff;
+      --green: #7bf1a8;
+      --border: rgba(255,255,255,.12);
+      --shadow: rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(103,232,249,.12), transparent 25%),
+        radial-gradient(circle at 80% 10%, rgba(179,136,255,.10), transparent 22%),
+        radial-gradient(circle at 50% 100%, rgba(255,138,61,.10), transparent 28%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      padding: 1.2rem;
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(10,12,24,.96), rgba(19,25,46,.92));
+      border: 3px solid #fff;
+      border-radius: 26px;
+      padding: 2.2rem 1.6rem 1.8rem;
+      box-shadow: 10px 10px 0 rgba(255,255,255,.08);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(115deg, transparent 0 30%, rgba(255,228,94,.08) 30% 34%, transparent 34% 100%),
+        linear-gradient(135deg, transparent 0 60%, rgba(103,232,249,.07) 60% 64%, transparent 64% 100%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: .9rem;
+    }
+
+    .hero h1 {
+      font-family: 'Bangers', cursive;
+      letter-spacing: .05em;
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      line-height: .95;
+      margin-bottom: 1rem;
+      text-shadow: 3px 3px 0 #000;
+    }
+
+    .hero h1 .magic { color: var(--yellow); }
+    .hero h1 .move { color: var(--orange); }
+
+    .hero p.lead {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .hero .quote {
+      margin-top: 1rem;
+      display: inline-block;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: .8rem 1rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .intro, .panel, .concepts, .finale {
+      background: linear-gradient(180deg, rgba(18,22,37,.96), rgba(14,18,30,.96));
+      border: 2px solid var(--border);
+      border-radius: 22px;
+      padding: 1.35rem 1.2rem;
+      box-shadow: 0 16px 30px var(--shadow);
+      margin-bottom: 1.2rem;
+    }
+
+    .intro p + p,
+    .panel p + p,
+    .concepts p + p,
+    .finale p + p {
+      margin-top: .85rem;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: .65rem;
+    }
+
+    .chapter-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      letter-spacing: .05em;
+      margin-bottom: .45rem;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: .98rem;
+      margin-bottom: .8rem;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1.2rem 0;
+    }
+
+    .panel {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(255,255,255,.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .accent-yellow { border-top: 4px solid var(--yellow); }
+    .accent-orange { border-top: 4px solid var(--orange); }
+    .accent-cyan { border-top: 4px solid var(--cyan); }
+    .accent-violet { border-top: 4px solid var(--violet); }
+    .accent-green { border-top: 4px solid var(--green); }
+
+    .story-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #fff;
+      color: #111;
+      font-weight: 900;
+      margin-bottom: .75rem;
+      box-shadow: 4px 4px 0 rgba(255,255,255,.12);
+    }
+
+    .panel h3 {
+      font-size: 1.25rem;
+      margin-bottom: .35rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin: .75rem 0 .95rem;
+    }
+
+    .tag {
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+      padding: .34rem .62rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: #fff;
+    }
+
+    .concepts ul,
+    .finale ul {
+      margin-top: .7rem;
+      padding-left: 1.15rem;
+    }
+
+    .concepts li,
+    .finale li {
+      margin-bottom: .5rem;
+      color: var(--muted);
+    }
+
+    .concepts strong,
+    .finale strong {
+      color: #fff;
+    }
+
+    .callout {
+      margin-top: 1rem;
+      background: linear-gradient(135deg, rgba(103,232,249,.14), rgba(255,138,61,.12));
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 18px;
+      padding: 1rem;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #96a0c4;
+      font-size: .9rem;
+      padding: 1rem 0 2rem;
+    }
+
+    a.inline-link {
+      color: var(--yellow);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    a.inline-link:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      .story-grid { grid-template-columns: 1fr; }
+      .hero { padding: 1.8rem 1.1rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-tag">Física · Movimiento · Narrativa para 10° ·</div>
+      <h1>Colección:<br><span class="magic">Cuentos</span> en <span class="move">Movimiento</span></h1>
+      <p class="lead">
+        A veces la física no entra primero por una fórmula, sino por una historia. En esta colección,
+        el movimiento aparece escondido en carreras, vuelos, dibujos, balsas y pequeños viajes que parecen sencillos,
+        pero que guardan preguntas muy poderosas.
+      </p>
+      <div class="quote">La física también puede comenzar con asombro.</div>
+    </header>
+
+    <section class="intro">
+      <div class="section-label">Antes de empezar</div>
+      <div class="chapter-title">Una invitación a mirar el mundo con ojos curiosos</div>
+      <p>
+        Esta publicación fue pensada para estudiantes de 10° que están dando sus primeros pasos en física.
+        Aquí no se trata de memorizar definiciones desde el primer minuto, sino de descubrir que cada movimiento
+        cuenta algo: desde dónde lo observamos, cuánto camino recorremos, qué tan rápido cambia, y por qué una gráfica
+        también puede narrar una historia.
+      </p>
+      <p>
+        Leer estos cuentos es como abrir una puerta. Primero aparece la imaginación; luego, casi sin darte cuenta,
+        surgen conceptos como <strong>marco de referencia</strong>, <strong>trayectoria</strong>, <strong>desplazamiento</strong>,
+        <strong>rapidez</strong>, <strong>velocidad media</strong> y <strong>gráficas del movimiento</strong>.
+      </p>
+      <div class="callout">
+        No leas estas historias como si fueran solo cuentos. Léelas como si cada personaje te estuviera susurrando una idea de física.
+      </div>
+    </section>
+
+    <div class="story-grid">
+      <article class="panel accent-yellow">
+        <div class="story-no">1</div>
+        <h3>El viaje de Nilo, el caracol veloz</h3>
+        <div class="subtitle">Una carrera pequeña con una gran lección escondida.</div>
+        <div class="tag-row">
+          <span class="tag">Marco de referencia</span>
+          <span class="tag">Trayectoria</span>
+          <span class="tag">Distancia y desplazamiento</span>
+        </div>
+        <p>
+          Nilo sueña con ser el caracol más veloz del jardín. Cuando participa en la Gran Carrera del Bosque,
+          descubre que no todos miden el camino de la misma forma. Algunos hablan de hojas, otros de pasos,
+          y hasta aparece quien quiere medir en mordiscos de queso.
+        </p>
+        <p>
+          Lo mágico del cuento está en que dos participantes pueden salir y llegar al mismo lugar,
+          pero no recorrer exactamente el mismo camino. Allí nace una de las primeras sorpresas de la cinemática:
+          <strong>trayectoria</strong> y <strong>desplazamiento</strong> no son lo mismo.
+        </p>
+      </article>
+
+      <article class="panel accent-cyan">
+        <div class="story-no">2</div>
+        <h3>Las alas de Brisa</h3>
+        <div class="subtitle">Volar rápido no siempre significa lo mismo que tener mayor velocidad media.</div>
+        <div class="tag-row">
+          <span class="tag">Rapidez</span>
+          <span class="tag">Velocidad media</span>
+          <span class="tag">Tiempo</span>
+        </div>
+        <p>
+          Brisa cruza el valle con alegría, giros y distracciones. En la ida parece muy veloz,
+          pero en el regreso toma una ruta más directa y tarda menos. Entonces surge una pregunta preciosa:
+          ¿qué significa realmente “ir más rápido”?
+        </p>
+        <p>
+          Este cuento ayuda a sentir que la física no solo mira cuán intenso fue el movimiento,
+          sino también cómo se relacionan el tiempo y el cambio de posición.
+        </p>
+      </article>
+
+      <article class="panel accent-orange">
+        <div class="story-no">3</div>
+        <h3>La carrera de Mía y Kiko</h3>
+        <div class="subtitle">La velocidad constante también tiene su propia fuerza silenciosa.</div>
+        <div class="tag-row">
+          <span class="tag">Velocidad constante</span>
+          <span class="tag">Velocidad variable</span>
+          <span class="tag">Comparación de movimientos</span>
+        </div>
+        <p>
+          Mía arranca como un relámpago, pero se detiene. Kiko avanza lento, aunque sin pausa.
+          Ambos llegan juntos. Y ahí está la magia: el movimiento no se comprende solo mirando quién parece más rápido por momentos,
+          sino observando todo el viaje completo.
+        </p>
+        <p>
+          Este relato muestra que la constancia también se puede describir con física,
+          y que comparar movimientos exige mirar trayectos, tiempos y cambios de comportamiento.
+        </p>
+      </article>
+
+      <article class="panel accent-violet">
+        <div class="story-no">4</div>
+        <h3>El dibujo del tiempo</h3>
+        <div class="subtitle">Cuando una línea en una gráfica empieza a contar una historia.</div>
+        <div class="tag-row">
+          <span class="tag">Posición vs. tiempo</span>
+          <span class="tag">Velocidad vs. tiempo</span>
+          <span class="tag">Interpretación gráfica</span>
+        </div>
+        <p>
+          Luna dibuja su recorrido minuto a minuto y descubre que un gráfico puede hablar.
+          Una línea que sube, una línea horizontal o una línea que baja dejan de ser simples trazos:
+          se convierten en una forma visual de narrar lo que un cuerpo está haciendo.
+        </p>
+        <p>
+          Para muchos estudiantes, este es el momento en que la física cambia. Ya no se ve como una lista de fórmulas,
+          sino como un lenguaje para representar lo que ocurre en el tiempo.
+        </p>
+      </article>
+    </div>
+
+    <article class="panel accent-green">
+      <div class="story-no">5</div>
+      <h3>La balsa de la tortuga Tenuk</h3>
+      <div class="subtitle">Moverse y no moverse pueden ser verdad al mismo tiempo.</div>
+      <div class="tag-row">
+        <span class="tag">Movimiento relativo</span>
+        <span class="tag">Marco de referencia</span>
+        <span class="tag">Observador</span>
+      </div>
+      <p>
+        Tenuk viaja sobre una balsa que flota río abajo. Desde la orilla, parece moverse. Desde la balsa,
+        parece estar quieta. ¿Cuál de las dos miradas es correcta? Las dos.
+      </p>
+      <p>
+        Este cuento es una puerta excelente para comprender que en física muchas respuestas dependen
+        del punto desde donde se observa el fenómeno. Y eso, lejos de complicarlo todo, vuelve el estudio del movimiento mucho más interesante.
+      </p>
+    </article>
+
+    <section class="concepts">
+      <div class="section-label">Lo que estaba escondido en las historias</div>
+      <div class="chapter-title">Conceptos que empiezan a despertar</div>
+      <ul>
+        <li><strong>Marco de referencia:</strong> todo movimiento necesita un “desde dónde se mira”.</li>
+        <li><strong>Trayectoria:</strong> es el camino real que sigue un cuerpo.</li>
+        <li><strong>Distancia recorrida:</strong> cuánto camino se recorrió, sin importar la dirección.</li>
+        <li><strong>Desplazamiento:</strong> cambio neto de posición entre el inicio y el final.</li>
+        <li><strong>Rapidez y velocidad media:</strong> ayudan a relacionar movimiento, tiempo y dirección.</li>
+        <li><strong>Velocidad constante y variable:</strong> no todos los cuerpos se mueven del mismo modo.</li>
+        <li><strong>Gráficas del movimiento:</strong> permiten contar con líneas lo que antes contábamos con palabras.</li>
+        <li><strong>Movimiento relativo:</strong> un mismo fenómeno puede verse distinto según el observador.</li>
+      </ul>
+      <div class="callout">
+        En otras palabras: la física aparece cuando dejamos de mirar solo “qué se mueve” y empezamos a preguntarnos <em>cómo</em>, <em>cuánto</em>, <em>respecto a qué</em> y <em>durante cuánto tiempo</em>.
+      </div>
+    </section>
+
+    <section class="finale">
+      <div class="section-label">Cierre</div>
+      <div class="chapter-title">Ahora deja que el movimiento comience</div>
+      <p>
+        Esta colección no busca que el estudiante termine la lectura sintiendo que ya domina toda la cinemática.
+        Busca algo más valioso: que empiece a mirar el movimiento con curiosidad, que sospeche que detrás de una carrera,
+        un vuelo, una pausa o un dibujo hay una idea física esperando ser entendida.
+      </p>
+      <p>
+        Y cuando la curiosidad se enciende, las fórmulas dejan de ser un muro. Se vuelven herramientas.
+      </p>
+      <ul>
+        <li><strong>Lee</strong> con imaginación.</li>
+        <li><strong>Observa</strong> con atención.</li>
+        <li><strong>Pregunta</strong> sin miedo.</li>
+        <li><strong>Conecta</strong> la historia con el concepto.</li>
+      </ul>
+      <p>
+        Porque la física, cuando se cuenta bien, no espanta: invita.
+      </p>
+      <p>
+        Basado en tu publicación de Medium
+        <a class="inline-link" href="https://medium.com/@hayzar/colecci%C3%B3n-cuentos-en-movimiento-bc8f5e73cde0" target="_blank" rel="noopener noreferrer">“Colección: Cuentos en Movimiento”</a>.
+      </p>
+    </section>
+
+    <div class="footer-note">
+      HTML inspirado en el estilo visual del archivo de referencia que subiste, adaptado para una versión más mágica y amigable para estudiantes de 10°.
+    </div>
+  </div>
+</body>
+</html>
